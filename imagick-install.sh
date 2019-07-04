@@ -11,21 +11,22 @@ make clean > /dev/null
 make >/dev/null 2>&1
 sudo make install
 
+sudo DEBIAN_FRONTEND=noninteractive apt install -y libperl-dev
 if [ ! -e ImageMagick.tar.gz ]; then
     wget http://www.imagemagick.org/download/ImageMagick.tar.gz
     tar -zxf ImageMagick.tar.gz
 fi;
-cd /tmp/ImageMagick-7.0.8
+cd /tmp/ImageMagick-7.0.8-51
 ./configure --with-modules --enable-shared --with-perl
 make clean > /dev/null
 make >/dev/null 2>&1
 sudo make install
 
-if [ ! -e ghostpcl-9.27-linux-x86_64.tgz ]; then
-    wget https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs927/ghostpcl-9.27-linux-x86_64.tgz
-    tar -zxf ghostpcl-9.27-linux-x86_64.tgz
+if [ ! -e ghostpdl-9.27.tar.gz ]; then
+    wget https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs927/ghostpdl-9.27.tar.gz
+    tar -zxf ghostpdl-9.27.tar.gz
 fi;
-cd /tmp/ghostpcl-9.27-linux-x86_64
+cd /tmp/ghostpdl-9.27
 ./configure
 make clean > /dev/null
 make >/dev/null 2>&1
@@ -35,7 +36,7 @@ if [ ! -e freetype-2.10.0.tar.gz ]; then
     wget http://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.gz
     tar -zxf freetype-2.10.0.tar.gz
 fi;
-cd /tmp/freetype-2.10.0.tar.gz
+cd /tmp/freetype-2.10.0
 ./configure
 make clean > /dev/null
 make >/dev/null 2>&1
