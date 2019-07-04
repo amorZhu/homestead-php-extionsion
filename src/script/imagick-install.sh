@@ -1,18 +1,30 @@
 #!/usr/bin/env bash
 export DEBIAN_FRONTEND=noninteractive
-
-if [ ! -e pkg-config-0.29.2.tar.gz ]; then
-    wget https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
-    tar -zxf pkg-config-0.29.2.tar.gz
+cd /tmp
+if [ ! -e ghostpdl-9.27.tar.gz ]; then
+    wget https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs927/ghostpdl-9.27.tar.gz
+    tar -zxf ghostpdl-9.27.tar.gz
 fi;
-cd /tmp/pkg-config-0.29.2
-./configure --with-internal-glib
+cd ghostpdl-9.27
+./configure
 make clean > /dev/null
 make >/dev/null 2>&1
 sudo make install
 
+cd -
+if [ ! -e freetype-2.10.0.tar.gz ]; then
+    wget http://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.gz
+    tar -zxf freetype-2.10.0.tar.gz
+fi;
+cd freetype-2.10.0
+./configure
+make clean > /dev/null
+make >/dev/null 2>&1
+sudo make install
+
+cd -
 sudo DEBIAN_FRONTEND=noninteractive apt install -y libperl-dev
-if [ ! -e ImageMagick.tar.gz ]; then
+if [ ! -e /tmp/ImageMagick.tar.gz ]; then
     wget http://www.imagemagick.org/download/ImageMagick.tar.gz
     tar -zxf ImageMagick.tar.gz
 fi;
@@ -22,27 +34,19 @@ make clean > /dev/null
 make >/dev/null 2>&1
 sudo make install
 
-if [ ! -e ghostpdl-9.27.tar.gz ]; then
-    wget https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs927/ghostpdl-9.27.tar.gz
-    tar -zxf ghostpdl-9.27.tar.gz
+cd -
+if [ ! -e /tmp/pkg-config-0.29.2.tar.gz ]; then
+    wget https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
+    tar -zxf pkg-config-0.29.2.tar.gz
 fi;
-cd /tmp/ghostpdl-9.27
-./configure
+cd /tmp/pkg-config-0.29.2
+./configure --with-internal-glib
 make clean > /dev/null
 make >/dev/null 2>&1
 sudo make install
 
-if [ ! -e freetype-2.10.0.tar.gz ]; then
-    wget http://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.gz
-    tar -zxf freetype-2.10.0.tar.gz
-fi;
-cd /tmp/freetype-2.10.0
-./configure
-make clean > /dev/null
-make >/dev/null 2>&1
-sudo make install
-
-if [ ! -e imagick-3.4.4.tgz ]; then
+cd -
+if [ ! -e /tmp/imagick-3.4.4.tgz ]; then
     wget https://pecl.php.net/get/imagick-3.4.4.tgz
     tar -zxf imagick-3.4.4.tgz
 fi;
