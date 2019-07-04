@@ -1,6 +1,18 @@
 #!/usr/bin/env bash
 export DEBIAN_FRONTEND=noninteractive
+
 cd /tmp
+if [ ! -e /tmp/pkg-config-0.29.2.tar.gz ]; then
+    wget https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
+    tar -zxf pkg-config-0.29.2.tar.gz
+fi;
+cd /tmp/pkg-config-0.29.2
+./configure --with-internal-glib
+make clean > /dev/null
+make >/dev/null 2>&1
+sudo make install
+
+cd -
 if [ ! -e ghostpdl-9.27.tar.gz ]; then
     wget https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs927/ghostpdl-9.27.tar.gz
     tar -zxf ghostpdl-9.27.tar.gz
@@ -22,26 +34,15 @@ make clean > /dev/null
 make >/dev/null 2>&1
 sudo make install
 
-sudo DEBIAN_FRONTEND=noninteractive apt install -y imagemagick
 cd -
 sudo DEBIAN_FRONTEND=noninteractive apt install -y libperl-dev
+sudo DEBIAN_FRONTEND=noninteractive apt install -y imagemagick
 if [ ! -e /tmp/ImageMagick.tar.gz ]; then
     wget http://www.imagemagick.org/download/ImageMagick.tar.gz
     tar -zxf ImageMagick.tar.gz
 fi;
 cd /tmp/ImageMagick-7.0.8-51
 ./configure --with-modules --enable-shared --with-perl
-make clean > /dev/null
-make >/dev/null 2>&1
-sudo make install
-
-cd -
-if [ ! -e /tmp/pkg-config-0.29.2.tar.gz ]; then
-    wget https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
-    tar -zxf pkg-config-0.29.2.tar.gz
-fi;
-cd /tmp/pkg-config-0.29.2
-./configure --with-internal-glib
 make clean > /dev/null
 make >/dev/null 2>&1
 sudo make install
