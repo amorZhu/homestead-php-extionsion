@@ -22,6 +22,7 @@ make clean > /dev/null
 make >/dev/null 2>&1
 sudo make install
 
+sudo DEBIAN_FRONTEND=noninteractive apt install -y imagemagick
 cd -
 sudo DEBIAN_FRONTEND=noninteractive apt install -y libperl-dev
 if [ ! -e /tmp/ImageMagick.tar.gz ]; then
