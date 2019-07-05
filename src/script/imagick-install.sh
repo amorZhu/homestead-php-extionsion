@@ -1,16 +1,36 @@
 #!/usr/bin/env bash
 export DEBIAN_FRONTEND=noninteractive
 
-cd /tmp
-if [ ! -e /tmp/pkg-config-0.29.2.tar.gz ]; then
+cd $HOME
+if [ ! -e pkg-config-0.29.2.tar.gz ]; then
     wget https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
     tar -zxf pkg-config-0.29.2.tar.gz
 fi;
-cd /tmp/pkg-config-0.29.2
+cd pkg-config-0.29.2
 ./configure --with-internal-glib
 make clean > /dev/null
 make >/dev/null 2>&1
 sudo make install
+
+cd -
+sudo DEBIAN_FRONTEND=noninteractive apt install -y libperl-dev
+sudo DEBIAN_FRONTEND=noninteractive apt install -y imagemagick
+if [ ! -e ImageMagick.tar.gz ]; then
+    wget http://www.imagemagick.org/download/ImageMagick.tar.gz
+    tar -zxf ImageMagick.tar.gz
+fi;
+
+export MAGICK_HOME="$HOME/ImageMagick-7.0.8"
+export PATH="$MAGICK_HOME/bin:$PATH"
+LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$MAGICK_HOME/lib"
+export LD_LIBRARY_PATH
+
+cd ImageMagick-7.0.8-51
+./configure --with-modules --enable-shared --with-perl --with-libtiff
+make clean > /dev/null
+make >/dev/null 2>&1
+sudo make install
+sudo ldconfig /usr/local/lib
 
 cd -
 if [ ! -e ghostpdl-9.27.tar.gz ]; then
@@ -35,24 +55,11 @@ make >/dev/null 2>&1
 sudo make install
 
 cd -
-sudo DEBIAN_FRONTEND=noninteractive apt install -y libperl-dev
-sudo DEBIAN_FRONTEND=noninteractive apt install -y imagemagick
-if [ ! -e /tmp/ImageMagick.tar.gz ]; then
-    wget http://www.imagemagick.org/download/ImageMagick.tar.gz
-    tar -zxf ImageMagick.tar.gz
-fi;
-cd /tmp/ImageMagick-7.0.8-51
-./configure --with-modules --enable-shared --with-perl
-make clean > /dev/null
-make >/dev/null 2>&1
-sudo make install
-
-cd -
-if [ ! -e /tmp/imagick-3.4.4.tgz ]; then
+if [ ! -e imagick-3.4.4.tgz ]; then
     wget https://pecl.php.net/get/imagick-3.4.4.tgz
     tar -zxf imagick-3.4.4.tgz
 fi;
-cd /tmp/imagick-3.4.4
+cd imagick-3.4.4
 
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y install php5.6-dev
 phpize5.6 
