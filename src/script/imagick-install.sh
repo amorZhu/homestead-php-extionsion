@@ -1,60 +1,15 @@
 #!/usr/bin/env bash
 export DEBIAN_FRONTEND=noninteractive
 
-cd $HOME
-if [ ! -e pkg-config-0.29.2.tar.gz ]; then
-    wget https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
-    tar -zxf pkg-config-0.29.2.tar.gz
-fi;
-cd pkg-config-0.29.2
-./configure --with-internal-glib
-make clean > /dev/null
-make >/dev/null 2>&1
-sudo make install
+sudo DEBIAN_FRONTEND=noninteractive apt-get install imagemagick
+sudo DEBIAN_FRONTEND=noninteractive apt-get install libmagick++-dev
 
-cd -
-sudo DEBIAN_FRONTEND=noninteractive apt install -y libperl-dev
-sudo DEBIAN_FRONTEND=noninteractive apt install -y imagemagick
-if [ ! -e ImageMagick.tar.gz ]; then
-    wget http://www.imagemagick.org/download/ImageMagick.tar.gz
-    tar -zxf ImageMagick.tar.gz
-fi;
+cp /etc/ImageMagick-6/policy.xml /etc/ImageMagick-6/policy.xml.bak
+sed -i "s/rights\=\"none\" pattern\=\"PS\"/rights\=\"read\|write\" pattern\=\"PS\"/" /etc/ImageMagick-6/policy.xml
+sed -i "s/rights\=\"none\" pattern\=\"EPI\"/rights\=\"read\|write\" pattern\=\"EPI\"/" /etc/ImageMagick-6/policy.xml
+sed -i "s/rights\=\"none\" pattern\=\"PDF\"/rights\=\"read\|write\" pattern\=\"PDF\"/" /etc/ImageMagick-6/policy.xml
+sed -i "s/rights\=\"none\" pattern\=\"XPS\"/rights\=\"read\|write\" pattern\=\"XPS\"/" /etc/ImageMagick-6/policy.xml
 
-export MAGICK_HOME="$HOME/ImageMagick-7.0.8"
-export PATH="$MAGICK_HOME/bin:$PATH"
-LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$MAGICK_HOME/lib"
-export LD_LIBRARY_PATH
-
-cd ImageMagick-7.0.8-51
-./configure --with-modules --enable-shared --with-perl --with-libtiff
-make clean > /dev/null
-make >/dev/null 2>&1
-sudo make install
-sudo ldconfig /usr/local/lib
-
-cd -
-if [ ! -e ghostpdl-9.27.tar.gz ]; then
-    wget https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs927/ghostpdl-9.27.tar.gz
-    tar -zxf ghostpdl-9.27.tar.gz
-fi;
-cd ghostpdl-9.27
-./configure
-make clean > /dev/null
-make >/dev/null 2>&1
-sudo make install
-
-cd -
-if [ ! -e freetype-2.10.0.tar.gz ]; then
-    wget http://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.gz
-    tar -zxf freetype-2.10.0.tar.gz
-fi;
-cd freetype-2.10.0
-./configure
-make clean > /dev/null
-make >/dev/null 2>&1
-sudo make install
-
-cd -
 if [ ! -e imagick-3.4.4.tgz ]; then
     wget https://pecl.php.net/get/imagick-3.4.4.tgz
     tar -zxf imagick-3.4.4.tgz
