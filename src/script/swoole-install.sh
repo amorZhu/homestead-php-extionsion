@@ -17,7 +17,7 @@ fi;
 
 cd swoole-4.4.1
 
-sudo DEBIAN_FRONTEND=noninteractive apt-get -y install php5.6-dev
+# sudo DEBIAN_FRONTEND=noninteractive apt-get -y install php5.6-dev
 # phpize5.6 
 # ./configure --with-php-config=/usr/bin/php-config5.6 > /dev/null
 # make clean > /dev/null
