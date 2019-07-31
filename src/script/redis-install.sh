@@ -11,7 +11,7 @@ if [ ! -e redis-5.0.0.tgz ]; then
     tar -zxf redis-5.0.0.tgz
 fi;
 
-cd redis-4.1.1
+cd redis-5.0.0
 
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y install php5.6-dev
 phpize5.6 
