@@ -13,19 +13,6 @@ fi;
 
 cd redis-5.0.0
 
-sudo DEBIAN_FRONTEND=noninteractive apt-get -y install php5.6-dev
-phpize5.6 
-./configure --with-php-config=/usr/bin/php-config5.6 > /dev/null
-make clean > /dev/null
-make >/dev/null 2>&1
-sudo make install
-sudo chmod 644 /usr/lib/php/20131226/redis.so
-sudo bash -c "echo 'extension=redis.so' > /etc/php/5.6/mods-available/redis.ini"
-sudo rm -rf /etc/php/5.6/cli/conf.d/20-redis.ini /etc/php/5.6/fpm/conf.d/20-redis.ini
-sudo ln -s /etc/php/5.6/mods-available/redis.ini /etc/php/5.6/cli/conf.d/20-redis.ini
-sudo ln -s /etc/php/5.6/mods-available/redis.ini /etc/php/5.6/fpm/conf.d/20-redis.ini
-sudo service php5.6-fpm restart
-
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y install php7.0-dev
 phpize7.0
 ./configure --with-php-config=/usr/bin/php-config7.0 > /dev/null
