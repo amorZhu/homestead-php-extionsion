@@ -2,16 +2,16 @@
 export DEBIAN_FRONTEND=noninteractive
 
 PHP_EXTENSION_NAME="redis"
-PHP_EXTENSION_VERSION="5.0.0"
+PHP_EXTENSION_VERSION="5.0.2"
 
 SYSTEM="linux"
 
-if [ ! -e redis-5.0.0.tgz ]; then
-    wget https://pecl.php.net/get/redis-5.0.0.tgz
-    tar -zxf redis-5.0.0.tgz
+if [ ! -e redis-5.0.2.tgz ]; then
+    wget https://pecl.php.net/get/redis-5.0.2.tgz
+    tar -zxf redis-5.0.2.tgz
 fi;
 
-cd redis-5.0.0
+cd redis-5.0.2
 
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y install php7.0-dev
 phpize7.0
